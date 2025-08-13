@@ -78,8 +78,8 @@ Follow these steps in order to build the application systematically:
 - ✅ Clean up project structure
 
 ### 4. Build Authentication System
-- [ ] Configure `config/packages/security.yaml` with firewall and access control
-- [ ] Create `SecurityController` for login/logout at `/`
+- ✅ Configure `config/packages/security.yaml` with firewall and access control
+- ✅ Create `SecurityController` for login/logout at `/`
 - [ ] Create `RegistrationController` for user signup at `/registration`
 - [ ] Create `RegistrationFormType` form class
 - [ ] Implement password hashing in registration
