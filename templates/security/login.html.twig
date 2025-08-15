@@ -6,126 +6,99 @@
 
 {# Add custom CSS for the login page #}
 {% block stylesheets %}
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .login-container {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .error {
-            color: #dc3545;
-            margin-bottom: 15px;
-            padding: 10px;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            border-radius: 4px;
-        }
-        .register-link {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .register-link a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ asset('css/login.css') }}" rel="stylesheet">
 {% endblock %}
 
 {# Main page content #}
 {% block body %}
     <div class="login-container">
-        <h1>🛸 Rick and Morty Portal</h1>
-        
+        <div class="login-header">
+            <img src="{{ asset('images/portal.png') }}" class="logo" alt="Rick & Morty Portal">
+            <h1> Rick & Morty Portal</h1>
+            <p class="subtitle">Please log in to continue</p>
+        </div>
+
         {# Display login errors if they exist #}
         {% if error %}
-            <div class="error">
-                {{ error.messageKey|trans(error.messageData, 'security') }}
+            <div class="alert alert-error">
+                <span class="alert-icon">❌</span>
+                <span>{{ error.messageKey|trans(error.messageData, 'security') }}</span>
             </div>
         {% endif %}
         
         {# Login form - submits to the same route (app_login) #}
         <form method="post">
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input 
-                    type="text" 
-                    id="username" 
-                    name="_username" 
-                    value="{{ last_username }}" 
-                    required 
-                    autocomplete="username"
-                >
+                <label for="username">Username</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="_username" 
+                        value="{{ last_username }}" 
+                        placeholder="Enter your username"
+                        required 
+                        autocomplete="username"
+                    >
+                    <i class="fas fa-user input-icon"></i>
+                </div>
             </div>
-            
+
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    name="_password" 
-                    required 
-                    autocomplete="current-password"
-                >
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="_password" 
+                        placeholder="Enter your password"
+                        required 
+                        autocomplete="current-password"
+                    >
+                    <i class="fas fa-lock input-icon"></i>
+                    <button type="button" class="password-toggle" onclick="togglePassword()">
+                        <i class="fas fa-eye" id="toggleIcon"></i>
+                    </button>
+                </div>
             </div>
             
             {# CSRF token for security #}
             <input type="hidden" name="_token" value="{{ csrf_token('authenticate') }}">
             
-            <button type="submit">Login</button>
+            <button type="submit" class="btn">
+                <i class="fas fa-sign-in-alt"></i>
+                Sign In
+            </button>
         </form>
-        
-        <div class="register-link">
-            <p>Don't have an account? <a href="{{ path('app_register') }}">Register here</a></p>
+
+        <div class="signup-link">
+            <p>Don't have an account yet?</p>
+            <a href="{{ path('app_register') }}">
+                <i class="fas fa-user-plus"></i>
+                Create your account
+            </a>
         </div>
     </div>
+{% endblock %}
+
+{# Add JavaScript for password toggle functionality #}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const toggleIcon = document.getElementById('toggleIcon');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+    </script>
 {% endblock %}

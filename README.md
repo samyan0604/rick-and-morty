@@ -84,7 +84,7 @@ Follow these steps in order to build the application systematically:
 - [ ] Create `RegistrationFormType` form class
 - [ ] Implement password hashing in registration
 - [ ] Add CSRF protection to forms
-- [ ] Create login template (`templates/security/login.html.twig`)
+- ✅ Create login template (`templates/security/login.html.twig`)
 - [ ] Create registration template (`templates/registration/register.html.twig`)
 - [ ] Test authentication flow manually
 
