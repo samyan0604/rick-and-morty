@@ -89,12 +89,12 @@ Follow these steps in order to build the application systematically:
 - ✅ Test authentication flow manually
 
 ### 5. Integrate Rick & Morty API
-- [ ] Complete `RickMortyApiService` class:
-  - [ ] Add `getCharacters($page = 1)` method
-  - [ ] Add `getCharacter($id)` method
-  - [ ] Implement caching for API responses (5-10 minutes)
-  - [ ] Add error handling for API failures
-  - [ ] Handle rate limiting gracefully
+- ✅ Complete `RickMortyApiService` class:
+  - ✅ Add `getCharacters($page = 1)` method
+  - ✅ Add `getCharacter($id)` method
+  - ✅ Implement caching for API responses (5-10 minutes)
+  - ✅ Add error handling for API failures
+  - ✅ Handle rate limiting gracefully
 
 ### 6. Implement Public Characters List (`/characters/`)
 - [ ] Create `CharacterController` with list action
@@ -212,5 +212,5 @@ Follow these steps in order to build the application systematically:
 
 ---
 
-**Current Status**: Foundation, Symfony concepts, Git setup, and Authentication System complete ✅  
-**Next Step**: Integrate Rick & Morty API (Step 5)
+**Current Status**: Foundation, Symfony concepts, Git setup, Authentication System, and Rick & Morty API integration complete ✅  
+**Next Step**: Implement Public Characters List (Step 6)
