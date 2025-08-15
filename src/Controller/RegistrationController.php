@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 class RegistrationController extends AbstractController
@@ -15,8 +17,11 @@ class RegistrationController extends AbstractController
      * Registration page - show form and handle registration
      */
     #[Route('/registration', name: 'app_register')]
-    public function register(Request $request): Response
-    {
+    public function register(
+        Request $request,
+        UserPasswordHasherInterface $passwordHasher,
+        EntityManagerInterface $entityManager
+    ): Response {
         // If user is already logged in, redirect to character list
         if ($this->getUser()) {
             return $this->redirectToRoute('app_character_list');
@@ -38,14 +43,31 @@ class RegistrationController extends AbstractController
             
             // Basic password confirmation check
             if ($user->getPassword() !== $confirmPassword) {
-                // Passwords don't match - we'll add proper error handling later
+                // Passwords don't match
                 $this->addFlash('error', 'Passwords do not match');
             } else {
-                // Passwords match - we'll add password hashing and database saving later
-                
-                // For now, just show success and redirect to login
-                $this->addFlash('success', 'Registration successful! Please log in.');
-                return $this->redirectToRoute('app_login');
+                try {
+                    // Hash the password before saving
+                    $hashedPassword = $passwordHasher->hashPassword(
+                        $user,
+                        $user->getPassword()  // Plain text password from form
+                    );
+                    
+                    // Set the hashed password on the user
+                    $user->setPassword($hashedPassword);
+                    
+                    // Save user to database
+                    $entityManager->persist($user);
+                    $entityManager->flush();
+                    
+                    // Success! Redirect to login with success message
+                    $this->addFlash('success', 'Registration successful! You can now log in.');
+                    return $this->redirectToRoute('app_login');
+                    
+                } catch (\Exception $e) {
+                    // Handle database errors
+                    $this->addFlash('error', 'Registration failed. Please try again.');
+                }
             }
         }
 

@@ -80,13 +80,13 @@ Follow these steps in order to build the application systematically:
 ### 4. Build Authentication System
 - ✅ Configure `config/packages/security.yaml` with firewall and access control
 - ✅ Create `SecurityController` for login/logout at `/`
-- [ ] Create `RegistrationController` for user signup at `/registration`
-- [ ] Create `RegistrationFormType` form class
-- [ ] Implement password hashing in registration
-- [ ] Add CSRF protection to forms
+- ✅ Create `RegistrationController` for user signup at `/registration`
+- ✅ Create `RegistrationFormType` form class
+- ✅ Implement password hashing in registration
+- ✅ Add CSRF protection to forms
 - ✅ Create login template (`templates/security/login.html.twig`)
-- [ ] Create registration template (`templates/registration/register.html.twig`)
-- [ ] Test authentication flow manually
+- ✅ Create registration template (`templates/registration/register.html.twig`)
+- ✅ Test authentication flow manually
 
 ### 5. Integrate Rick & Morty API
 - [ ] Complete `RickMortyApiService` class:
@@ -212,5 +212,5 @@ Follow these steps in order to build the application systematically:
 
 ---
 
-**Current Status**: Foundation, Symfony concepts, and Git setup complete ✅  
-**Next Step**: Build Authentication System (Step 4)
+**Current Status**: Foundation, Symfony concepts, Git setup, and Authentication System complete ✅  
+**Next Step**: Integrate Rick & Morty API (Step 5)
