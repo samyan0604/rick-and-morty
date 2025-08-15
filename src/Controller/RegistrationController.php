@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 
 class RegistrationController extends AbstractController
 {
@@ -45,6 +46,7 @@ class RegistrationController extends AbstractController
             if ($user->getPassword() !== $confirmPassword) {
                 // Passwords don't match
                 $this->addFlash('error', 'Passwords do not match');
+                return $this->redirectToRoute('app_register');
             } else {
                 try {
                     // Hash the password before saving
@@ -67,6 +69,7 @@ class RegistrationController extends AbstractController
                 } catch (\Exception $e) {
                     // Handle database errors
                     $this->addFlash('error', 'Registration failed. Please try again.');
+                    return $this->redirectToRoute('app_register');
                 }
             }
         }

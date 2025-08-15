@@ -97,15 +97,15 @@ Follow these steps in order to build the application systematically:
   - ✅ Handle rate limiting gracefully
 
 ### 6. Implement Public Characters List (`/characters/`)
-- [ ] Create `CharacterController` with list action
-- [ ] Call Rick & Morty API service
-- [ ] Create `templates/character/list.html.twig`:
-  - [ ] Grid view layout
-  - [ ] Display character image, name, and status
-  - [ ] Add links to individual character pages
-  - [ ] Handle empty states
-- [ ] Add optional pagination for large result sets
-- [ ] Test public access (no authentication required)
+- ✅ Create `CharacterController` with list action
+- ✅ Call Rick & Morty API service
+- ✅ Create `templates/character/list.html.twig`:
+  - ✅ Grid view layout
+  - ✅ Display character image, name, and status
+  - ✅ Add links to individual character pages
+  - ✅ Handle empty states
+- ✅ Add optional pagination for large result sets
+- ✅ Test public access (no authentication required)
 
 ### 7. Implement Protected Character Profile (`/characters/{id}`)
 - [ ] Add character show action to `CharacterController`
@@ -212,5 +212,5 @@ Follow these steps in order to build the application systematically:
 
 ---
 
-**Current Status**: Foundation, Symfony concepts, Git setup, Authentication System, and Rick & Morty API integration complete ✅  
-**Next Step**: Implement Public Characters List (Step 6)
+**Current Status**: Foundation, Symfony concepts, Git setup, Authentication System, Rick & Morty API integration, and Public Characters List complete ✅  
+**Next Step**: Implement Protected Character Profile (Step 7)

@@ -26,6 +26,17 @@
                 <span>{{ error.messageKey|trans(error.messageData, 'security') }}</span>
             </div>
         {% endif %}
+
+        {% for type, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ type == 'error' ? 'error' : 'success' }}">
+                    <span class="alert-icon">
+                        {% if type == 'error' %}❌{% else %}✅{% endif %}
+                    </span>
+                    <span>{{ message }}</span>
+                </div>
+            {% endfor %}
+        {% endfor %}
         
         {# Login form - submits to the same route (app_login) #}
         <form method="post">
