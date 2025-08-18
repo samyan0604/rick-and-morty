@@ -68,7 +68,7 @@ class RegistrationController extends AbstractController
                     
                 } catch (\Exception $e) {
                     // Handle database errors
-                    $this->addFlash('error', 'Registration failed. Please try again.');
+                    $this->addFlash('error', 'Username already exists!');
                     return $this->redirectToRoute('app_register');
                 }
             }

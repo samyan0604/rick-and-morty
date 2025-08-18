@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom components for Rick and Morty theme */
+@layer components {
+  .btn-primary {
+    @apply bg-rick-green hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition-colors duration-200;
+  }
+  
+  .btn-secondary {
+    @apply bg-portal-blue hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-200;
+  }
+  
+  .btn-danger {
+    @apply bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition-colors duration-200;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-200 hover:scale-105;
+  }
+  
+  .portal-gradient {
+    @apply bg-gradient-to-r from-portal-blue via-green-400 to-rick-green;
+  }
+  
+  .space-bg {
+    @apply bg-gradient-to-b from-space-dark to-gray-900;
+  }
+}
+
+/* Custom animations */
+@layer utilities {
+  .animate-portal-spin {
+    animation: portalSpin 2s linear infinite;
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+}
+
+@keyframes portalSpin {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  to {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}

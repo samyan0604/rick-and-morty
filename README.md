@@ -119,15 +119,15 @@ Follow these steps in order to build the application systematically:
 - ✅ Test access control (redirect to login if not authenticated)
 
 ### 8. Implement Protected User Favorites (`/user/characters/`)
-- [ ] Create `FavoriteController` with list action
-- [ ] Query user's favorites using Doctrine relationship
-- [ ] Create `templates/favorite/list.html.twig`:
-  - [ ] Display favorited characters
-  - [ ] Add "Remove from Favorites" option
-  - [ ] Handle empty state (no favorites yet)
-- [ ] Prevent duplicate favorites in database
-- [ ] Add remove-from-favorites functionality
-- [ ] Test route protection and favorites persistence
+- ✅ Create `FavoriteController` with list action
+- ✅ Query user's favorites using Doctrine relationship
+- ✅ Create `templates/favorite/list.html.twig`:
+  - ✅ Display favorited characters
+  - ✅ Add "Remove from Favorites" option
+  - ✅ Handle empty state (no favorites yet)
+- ✅ Prevent duplicate favorites in database
+- ✅ Add remove-from-favorites functionality
+- ✅ Test route protection and favorites persistence
 
 ### 9. Navigation & User Experience
 - [ ] Create base template (`templates/base.html.twig`) with:
@@ -212,5 +212,5 @@ Follow these steps in order to build the application systematically:
 
 ---
 
-**Current Status**: Foundation, Symfony concepts, Git setup, Authentication System, Rick & Morty API integration, and Public Characters List complete ✅  
-**Next Step**: Implement Protected Character Profile (Step 7)
+**Current Status**: Foundation, Symfony concepts, Git setup, Authentication System, Rick & Morty API integration, Public Characters List, Protected Character Profiles, and User Favorites complete ✅  
+**Next Step**: Navigation & User Experience (Step 9)

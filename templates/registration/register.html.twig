@@ -8,7 +8,21 @@
 {% block stylesheets %}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="{{ asset('css/login.css') }}" rel="stylesheet">
+    <style>
+    .alert-success {
+        background-color: #f0fff4 !important;
+        color: #155724 !important;
+        border: 1px solid #c3e6cb !important;
+        border-left: 4px solid #28a745 !important;
+        padding: 15px 20px !important;
+        border-radius: 8px !important;
+        margin-bottom: 20px !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    </style>
 {% endblock %}
+
 
 {# Main page content #}
 {% block body %}
@@ -41,7 +55,7 @@
                     {{ form_widget(form.username, {
                         'attr': {
                             'class': 'form-control',
-                            'placeholder': 'Enter username (3-50 characters)'
+                            'placeholder': 'Enter username'
                         }
                     }) }}
                     <i class="fas fa-user input-icon"></i>
@@ -56,7 +70,7 @@
                     {{ form_widget(form.password, {
                         'attr': {
                             'class': 'form-control',
-                            'placeholder': 'Enter password (min 6 chars, letters + numbers)'
+                            'placeholder': 'Enter password'
                         }
                     }) }}
                     <i class="fas fa-lock input-icon"></i>
