@@ -108,15 +108,15 @@ Follow these steps in order to build the application systematically:
 - ✅ Test public access (no authentication required)
 
 ### 7. Implement Protected Character Profile (`/characters/{id}`)
-- [ ] Add character show action to `CharacterController`
-- [ ] Configure route protection in security.yaml
-- [ ] Create `templates/character/show.html.twig`:
-  - [ ] Display full character details (name, status, species, origin, location)
-  - [ ] Show character image
-  - [ ] Add "Save to Favorites" button/form (POST request)
-- [ ] Implement add-to-favorites functionality
-- [ ] Handle API errors (character not found)
-- [ ] Test access control (redirect to login if not authenticated)
+- ✅ Add character show action to `CharacterController`
+- ✅ Configure route protection in security.yaml
+- ✅ Create `templates/character/show.html.twig`:
+  - ✅ Display full character details (name, status, species, origin, location)
+  - ✅ Show character image
+  - ✅ Add "Save to Favorites" button/form (POST request)
+- ✅ Implement add-to-favorites functionality
+- ✅ Handle API errors (character not found)
+- ✅ Test access control (redirect to login if not authenticated)
 
 ### 8. Implement Protected User Favorites (`/user/characters/`)
 - [ ] Create `FavoriteController` with list action
