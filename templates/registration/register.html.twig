@@ -7,128 +7,87 @@
 {# Add custom CSS for the registration page #}
 {% block stylesheets %}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="{{ asset('css/login.css') }}" rel="stylesheet">
-    <style>
-    .alert-success {
-        background-color: #f0fff4 !important;
-        color: #155724 !important;
-        border: 1px solid #c3e6cb !important;
-        border-left: 4px solid #28a745 !important;
-        padding: 15px 20px !important;
-        border-radius: 8px !important;
-        margin-bottom: 20px !important;
-        display: flex !important;
-        align-items: center !important;
-    }
-    </style>
+    <link href="{{ asset('css/tailwind.css') }}" rel="stylesheet">
 {% endblock %}
-
 
 {# Main page content #}
 {% block body %}
-    <div class="login-container">
-        <div class="login-header">
-            <img src="{{ asset('images/portal.png') }}" class="logo" alt="Rick & Morty Portal">
-            <h1>Rick & Morty Portal</h1>
-            <p class="subtitle">Create your account to continue</p>
+<div class="font-sans bg-gradient-to-br from-rick-green to-portal-blue flex justify-center items-center min-h-screen p-5 fixed inset-0 overflow-auto">
+    <div class="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md">
+        <div class="text-center mb-8">
+            <img src="{{ asset('images/portal.png') }}" class="w-32 h-32 mb-3 block mx-auto" alt="Rick & Morty Portal">
+            <h1 class="text-gray-800 text-center mb-5 text-3xl font-bold">Rick & Morty Portal</h1>
+            <p class="text-center text-gray-600 mb-8 text-base">Create your account to continue</p>
         </div>
 
         {# Display flash messages (success/error) #}
         {% for type, messages in app.flashes %}
             {% for message in messages %}
-                <div class="alert alert-{{ type == 'error' ? 'error' : 'success' }}">
-                    <span class="alert-icon">
+                <div class="{% if type == 'error' %}bg-red-50 border-l-4 border-red-500 text-red-700{% else %}bg-green-50 border-l-4 border-green-500 text-green-700{% endif %} p-4 mb-5 rounded-lg flex items-center">
+                    <span class="mr-3 text-lg">
                         {% if type == 'error' %}❌{% else %}✅{% endif %}
                     </span>
-                    <span>{{ message }}</span>
+                    <span class="font-medium">{{ message }}</span>
                 </div>
             {% endfor %}
         {% endfor %}
         
         {# Registration form using Symfony form functions #}
         {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-            
-            {# Username field #}
-            <div class="form-group">
+    
+            <div class="mb-5 relative">
                 {{ form_label(form.username) }}
-                <div class="input-wrapper">
-                    {{ form_widget(form.username, {
-                        'attr': {
-                            'class': 'form-control',
-                            'placeholder': 'Enter username'
-                        }
-                    }) }}
-                    <i class="fas fa-user input-icon"></i>
+                <div class="relative">
+                    {{ form_widget(form.username) }}
+                    <i class="fas fa-user absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 z-10 pointer-events-none"></i>
                 </div>
-                {{ form_errors(form.username) }}
             </div>
 
-            {# Password field #}
-            <div class="form-group">
+            <div class="mb-5 relative">
                 {{ form_label(form.password) }}
-                <div class="input-wrapper">
-                    {{ form_widget(form.password, {
-                        'attr': {
-                            'class': 'form-control',
-                            'placeholder': 'Enter password'
-                        }
-                    }) }}
-                    <i class="fas fa-lock input-icon"></i>
+                <div class="relative">
+                    {{ form_widget(form.password) }}
+                    <i class="fas fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 z-10 pointer-events-none"></i>
                 </div>
-                {{ form_errors(form.password) }}
             </div>
 
-            {# Confirm Password field #}
-            <div class="form-group">
+            <div class="mb-5 relative">
                 {{ form_label(form.confirmPassword) }}
-                <div class="input-wrapper">
-                    {{ form_widget(form.confirmPassword, {
-                        'attr': {
-                            'class': 'form-control',
-                            'placeholder': 'Re-enter your password'
-                        }
-                    }) }}
-                    <i class="fas fa-lock input-icon"></i>
+                <div class="relative">
+                    {{ form_widget(form.confirmPassword) }}
+                    <i class="fas fa-lock absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 z-10 pointer-events-none"></i>
                 </div>
-                {{ form_errors(form.confirmPassword) }}
             </div>
             
-            {# Submit button #}
-            {{ form_widget(form.submit, {
-                'attr': {
-                    'class': 'btn btn-primary'
-                }
-            }) }}
+            {{ form_widget(form.submit) }}
             
         {{ form_end(form) }}
 
-        <div class="signup-link">
-            <p>Already have an account?</p>
-            <a href="{{ path('app_login') }}">
-                <i class="fas fa-sign-in-alt"></i>
+        <div class="text-center mt-6 pt-6 border-t border-gray-300">
+            <p class="text-gray-600 mb-3">Already have an account?</p>
+            <a href="{{ path('app_login') }}" class="text-blue-500 no-underline font-semibold inline-flex items-center transition-colors duration-300 hover:text-purple-600">
+                <i class="fas fa-sign-in-alt mr-2"></i>
                 Sign in here
             </a>
         </div>
     </div>
+</div>
 {% endblock %}
 
-{# Add JavaScript if needed #}
+{# Add JavaScript for password validation #}
 {% block javascripts %}
     {{ parent() }}
     <script>
-        // Add any registration-specific JavaScript here
-        // For example, real-time password validation
-        
         document.addEventListener('DOMContentLoaded', function() {
             const passwordField = document.querySelector('input[name="registration_form[password]"]');
             const confirmField = document.querySelector('input[name="registration_form[confirmPassword]"]');
             
-            if (confirmField) {
+            if (confirmField && passwordField) {
                 confirmField.addEventListener('input', function() {
                     if (passwordField.value !== confirmField.value) {
-                        confirmField.style.borderColor = '#dc3545';
+                        confirmField.style.borderColor = '#dc3545 !important';
                     } else {
-                        confirmField.style.borderColor = '#28a745';
+                        confirmField.style.borderColor = '#28a745 !important';
                     }
                 });
             }

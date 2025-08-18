@@ -37,41 +37,72 @@ class RegistrationController extends AbstractController
         // Handle the request (process form submission)
         $form->handleRequest($request);
 
-        // Check if form was submitted and is valid
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Get the password confirmation for validation
+        // Check if form was submitted
+        if ($form->isSubmitted()) {
+            // Get form data
+            $username = $user->getUsername();
+            $password = $user->getPassword();
             $confirmPassword = $form->get('confirmPassword')->getData();
             
-            // Basic password confirmation check
-            if ($user->getPassword() !== $confirmPassword) {
-                // Passwords don't match
+            // Validate username
+            if (empty($username)) {
+                $this->addFlash('error', 'Username cannot be empty');
+                return $this->redirectToRoute('app_register');
+            } elseif (strlen($username) < 3) {
+                $this->addFlash('error', 'Username must be at least 3 characters long');
+                return $this->redirectToRoute('app_register');
+            } elseif (strlen($username) > 50) {
+                $this->addFlash('error', 'Username cannot be longer than 50 characters');
+                return $this->redirectToRoute('app_register');
+            }
+            
+            // Validate password
+            if (empty($password)) {
+                $this->addFlash('error', 'Password cannot be empty');
+                return $this->redirectToRoute('app_register');
+            } elseif (strlen($password) < 6) {
+                $this->addFlash('error', 'Password must be at least 6 characters long');
+                return $this->redirectToRoute('app_register');
+            }
+            
+            // Validate password confirmation
+            if (empty($confirmPassword)) {
+                $this->addFlash('error', 'Please confirm your password');
+                return $this->redirectToRoute('app_register');
+            } elseif ($password !== $confirmPassword) {
                 $this->addFlash('error', 'Passwords do not match');
                 return $this->redirectToRoute('app_register');
-            } else {
-                try {
-                    // Hash the password before saving
-                    $hashedPassword = $passwordHasher->hashPassword(
-                        $user,
-                        $user->getPassword()  // Plain text password from form
-                    );
-                    
-                    // Set the hashed password on the user
-                    $user->setPassword($hashedPassword);
-                    
-                    // Save user to database
-                    $entityManager->persist($user);
-                    $entityManager->flush();
-                    
-                    // Success! Redirect to login with success message
-                    $this->addFlash('success', 'Registration successful! You can now log in.');
-                    return $this->redirectToRoute('app_login');
-                    
-                } catch (\Exception $e) {
-                    // Handle database errors
-                    $this->addFlash('error', 'Username already exists!');
-                    return $this->redirectToRoute('app_register');
-                }
             }
+            
+            // If no validation errors, proceed with registration
+            try {
+                // Hash the password before saving
+                $hashedPassword = $passwordHasher->hashPassword(
+                    $user,
+                    $user->getPassword()
+                );
+                
+                // Set the hashed password on the user
+                $user->setPassword($hashedPassword);
+                
+                // Save user to database
+                $entityManager->persist($user);
+                $entityManager->flush();
+                
+                // Success! Redirect to login with success message
+                $this->addFlash('success', 'Registration successful! You can now log in.');
+                return $this->redirectToRoute('app_login');
+                
+            } catch (UniqueConstraintViolationException $e) {
+                // Handle unique constraint violations (duplicate username)
+                $this->addFlash('error', 'Username already exists! Please choose a different username.');
+                return $this->redirectToRoute('app_register');
+            } catch (\Exception $e) {
+                // Handle other database errors
+                $this->addFlash('error', 'Registration failed. Please try again.');
+                return $this->redirectToRoute('app_register');
+            }
+
         }
 
         // Show the registration form (whether first visit or has errors)
